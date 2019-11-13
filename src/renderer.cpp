@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include "tilemap.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -31,6 +32,10 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
+
+  Tilemap *tilemap = Tilemap::instance();
+  tilemap->init(sdl_renderer, 32, 32);
+  tilemap->addTile("../assets/grass.png", "grass");
 }
 
 Renderer::~Renderer() {
@@ -46,6 +51,10 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   // Clear screen
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
+
+  // Render grass
+  Tilemap::instance()->fillWith("grass", 0, 0, screen_width, screen_height);
+  Tilemap::instance()->render("grass", 0, 0);
 
   // Render food
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
