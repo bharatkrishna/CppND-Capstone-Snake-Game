@@ -17,6 +17,7 @@ class Game {
 
  private:
   Snake snake;
+  Snake enemy_snake;
   SDL_Point food;
 
   std::random_device dev;
@@ -28,6 +29,9 @@ class Game {
 
   void PlaceFood();
   void Update();
+  void MoveEnemy();
+  void ChangeDirection(Snake &snake, Snake::Direction input,
+                       Snake::Direction opposite) const;
 };
 
 #endif
