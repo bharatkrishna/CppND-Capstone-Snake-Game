@@ -36,6 +36,7 @@ Renderer::Renderer(const std::size_t screen_width,
   Tilemap *tilemap = Tilemap::instance();
   tilemap->init(sdl_renderer, 32, 32);
   tilemap->addTile("../assets/grass.png", "grass");
+  tilemap->addTile("../assets/apple.png", "food");
 }
 
 Renderer::~Renderer() {
@@ -57,10 +58,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   Tilemap::instance()->render("grass", 0, 0);
 
   // Render food
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  block.x = food.x * block.w;
-  block.y = food.y * block.h;
-  SDL_RenderFillRect(sdl_renderer, &block);
+  Tilemap::instance()->render("food", food.x * block.w, food.y * block.h);
 
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
