@@ -37,6 +37,10 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->init(sdl_renderer, 32, 32);
   tilemap->addTile("../assets/grass.png", "grass");
   tilemap->addTile("../assets/apple.png", "food");
+  tilemap->addTile("../assets/snake_head.png", "snake_head");
+  tilemap->addTile("../assets/snake_body.png", "snake_body");
+  tilemap->addTile("../assets/enemy_snake_head.png", "snake2_head");
+  tilemap->addTile("../assets/enemy_snake_body.png", "snake2_body");
 }
 
 Renderer::~Renderer() {
@@ -65,40 +69,34 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   for (SDL_Point const &point : snake.body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
-    SDL_RenderFillRect(sdl_renderer, &block);
+    Tilemap::instance()->render("snake_body", block.x, block.y);
   }
 
   // Render snake's head
   block.x = static_cast<int>(snake.head_x) * block.w;
   block.y = static_cast<int>(snake.head_y) * block.h;
   if (snake.alive) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
+    Tilemap::instance()->render("snake_head", block.x, block.y);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
-  SDL_RenderFillRect(sdl_renderer, &block);
 
  // Render snake2's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   for (SDL_Point const &point : snake2.body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
-    SDL_RenderFillRect(sdl_renderer, &block);
+    Tilemap::instance()->render("snake2_body", block.x, block.y);
   }
 
   // Render snake2's head
   block.x = static_cast<int>(snake2.head_x) * block.w;
   block.y = static_cast<int>(snake2.head_y) * block.h;
   if (snake2.alive) {
-    // SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+    Tilemap::instance()->render("snake2_head", block.x, block.y);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
-
-
-  
-  SDL_RenderFillRect(sdl_renderer, &block);
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
