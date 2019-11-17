@@ -16,6 +16,10 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
 
+  if (TTF_Init() == -1) {
+    std::cerr << "SDL could not initialize SDL_ttf.\n";
+  }
+
   // Create Window
   sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
@@ -43,11 +47,16 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->addTile("../assets/enemy_snake_head.png", "snake2_head");
   tilemap->addTile("../assets/enemy_snake_body.png", "snake2_body");
   tilemap->addTile("../assets/frog.png", "bonus");
+
+  //Create Text
+  std::unique_ptr<Text> ptr_text(new Text(sdl_renderer, "../assets/calibri.ttf", 30, "Hello", {0xFF, 0xFF, 0xFF, 0xFF}));
+  text = std::move(ptr_text);
 }
 
 Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
+  TTF_Quit();
 }
 
 void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &food, Bonus const &bonus) {
@@ -64,6 +73,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
 
   // Render food
   Tilemap::instance()->render("food", food.x * block.w, food.y * block.h);
+  text->display(grid_width, grid_height, sdl_renderer);
 
   // Render bonus
   if (bonus.place_bonus)

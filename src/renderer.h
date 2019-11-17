@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "snake.h"
 #include "bonus.h"
+#include "text.h"
 
 class Renderer {
  public:
@@ -23,6 +24,7 @@ class Renderer {
   const std::size_t screen_height;
   const std::size_t grid_width;
   const std::size_t grid_height;
+  std::unique_ptr<Text> text;
 };
 
 #endif
