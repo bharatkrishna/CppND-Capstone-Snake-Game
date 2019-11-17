@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+#include "bonus.h"
 
 class Game {
  public:
@@ -18,7 +19,11 @@ class Game {
  private:
   Snake snake;
   Snake enemy_snake;
+  // Food food_;
   SDL_Point food;
+  Bonus bonus;
+  Uint32 bonus_timer_start{0};
+  // bool place_bonus{false};
 
   std::random_device dev;
   std::mt19937 engine;
@@ -28,6 +33,9 @@ class Game {
   int score{0};
 
   void PlaceFood();
+  void PlaceBonus();
+  void RemoveBonus();
+  void UpdateBonus();
   void Update();
   void MoveEnemy();
   void ChangeDirection(Snake &snake, Snake::Direction input,

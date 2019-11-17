@@ -11,7 +11,7 @@ Renderer::Renderer(const std::size_t screen_width,
       grid_width(grid_width),
       grid_height(grid_height) {
   // Initialize SDL
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
     std::cerr << "SDL could not initialize.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
@@ -33,6 +33,7 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
 
+  // Add tile images
   Tilemap *tilemap = Tilemap::instance();
   tilemap->init(sdl_renderer, 32, 32);
   tilemap->addTile("../assets/grass.png", "grass");
@@ -41,6 +42,7 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->addTile("../assets/snake_body.png", "snake_body");
   tilemap->addTile("../assets/enemy_snake_head.png", "snake2_head");
   tilemap->addTile("../assets/enemy_snake_body.png", "snake2_body");
+  tilemap->addTile("../assets/frog.png", "bonus");
 }
 
 Renderer::~Renderer() {
@@ -48,7 +50,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &food) {
+void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &food, Bonus const bonus) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -59,10 +61,13 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
 
   // Render grass
   Tilemap::instance()->fillWith("grass", 0, 0, screen_width, screen_height);
-  Tilemap::instance()->render("grass", 0, 0);
 
   // Render food
   Tilemap::instance()->render("food", food.x * block.w, food.y * block.h);
+
+  // Render bonus
+  if (bonus.place_bonus)
+    Tilemap::instance()->render("bonus", bonus.loc.x * block.w, bonus.loc.y * block.h);
 
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);

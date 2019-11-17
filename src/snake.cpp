@@ -46,13 +46,22 @@ void Snake::UpdateHead() {
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
   // Add previous head location to vector
   body.push_back(prev_head_cell);
+  if (double_growth) {
+    SDL_Point piece;
+    body.push_back(piece);
+  }
 
   if (!growing) {
     // Remove the tail from the vector.
     body.erase(body.begin());
   } else {
     growing = false;
-    size++;
+    if (double_growth) {
+      size += 2;
+      double_growth = false;
+    } else {
+      size++;
+    }
   }
 
   // Check if the snake has died.
