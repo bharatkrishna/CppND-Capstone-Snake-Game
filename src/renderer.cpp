@@ -50,7 +50,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &food, Bonus const bonus) {
+void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &food, Bonus const &bonus) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;

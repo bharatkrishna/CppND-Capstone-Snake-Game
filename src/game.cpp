@@ -76,10 +76,9 @@ void Game::PlaceBonus() {
 void Game::RemoveBonus() {
   bonus.place_bonus = false;
 
-  std::random_device r;
-  std::default_random_engine e1(r());
   std::uniform_int_distribution<int> uniform_dist(20, 30);
-  bonus.interval = uniform_dist(e1);
+  bonus.interval = uniform_dist(engine);
+  std::cout << "Bonus interval: " << bonus.interval << "\n";
 }
 
 void Game::PlaceFood() {

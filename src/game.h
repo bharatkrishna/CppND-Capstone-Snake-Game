@@ -19,11 +19,9 @@ class Game {
  private:
   Snake snake;
   Snake enemy_snake;
-  // Food food_;
   SDL_Point food;
   Bonus bonus;
   Uint32 bonus_timer_start{0};
-  // bool place_bonus{false};
 
   std::random_device dev;
   std::mt19937 engine;
