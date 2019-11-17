@@ -6,8 +6,9 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
       enemy_snake(grid_width, grid_height),
       engine(dev()),
-      random_w(0, static_cast<int>(grid_width)),
-      random_h(0, static_cast<int>(grid_height)) {
+      random_w(0, static_cast<int>(grid_width)-1),
+      random_h(0, static_cast<int>(grid_height)-1),
+      bonus_interval(20, 30) {
   PlaceFood();
   bonus.place_bonus = false;
   bonus.interval = 10;
@@ -75,10 +76,8 @@ void Game::PlaceBonus() {
 
 void Game::RemoveBonus() {
   bonus.place_bonus = false;
-
-  std::uniform_int_distribution<int> uniform_dist(20, 30);
-  bonus.interval = uniform_dist(engine);
-  std::cout << "Bonus interval: " << bonus.interval << "\n";
+  bonus.interval = bonus_interval(engine);
+  // std::cout << "Bonus interval: " << bonus.interval << "\n";
 }
 
 void Game::PlaceFood() {
