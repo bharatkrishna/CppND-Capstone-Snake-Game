@@ -3,9 +3,6 @@
 
 Text::Text(const std::string &font_path) : font_path(font_path)
 {
-    // text_texture = loadFont(renderer, font_path, font_size, message_text, color);
-    // SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
-    std::cout << font_path << "\n";
 }
 
 void Text::display(int x, int y, SDL_Renderer *renderer, int font_size, const std::string &message_text, const SDL_Color &color) {
@@ -34,4 +31,8 @@ SDL_Texture *Text::loadFont(SDL_Renderer *renderer, const std::string &font_path
     }
     SDL_FreeSurface(text_surface);
     return text_texture;
+}
+
+Text::~Text() {
+    std::cout << "In ~Text()\n";
 }

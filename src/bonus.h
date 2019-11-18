@@ -4,7 +4,7 @@
 #include "SDL.h"
 
 struct Bonus {
-    bool place_bonus;
+    bool active;
     SDL_Point loc;
     int interval;
 };

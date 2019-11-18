@@ -49,7 +49,7 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->addTile("../assets/frog.png", "bonus");
 
   //Create Text
-  std::unique_ptr<Text> ptr_text(new Text( "../assets/calibri.ttf"));
+  std::unique_ptr<Text> ptr_text(new Text( "../assets/FreeSans.ttf"));
   text = std::move(ptr_text);
 }
 
@@ -75,7 +75,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   Tilemap::instance()->render("food", food.x * block.w, food.y * block.h);
 
   // Render bonus
-  if (bonus.place_bonus)
+  if (bonus.active)
     Tilemap::instance()->render("bonus", bonus.loc.x * block.w, bonus.loc.y * block.h);
 
   // Render snake's body
@@ -93,7 +93,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
     Tilemap::instance()->render("snake_head", block.x, block.y);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
-    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 20, "Game Over!", {0xFF, 0xFF, 0xFF, 0xFF});
+    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 18, "Game Over!", {0xFF, 0xFF, 0xFF, 0xFF});
   }
 
   // Render snake2's body
@@ -114,12 +114,12 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   }
 
   if (snake.alive && !snake2.alive) {
-    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 20, "Enemy Dead!", {0xFF, 0xFF, 0xFF, 0xFF});
+    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 18, "Enemy Dead!", {0xFF, 0xFF, 0xFF, 0xFF});
   }
 
   //Render score
-  text->display(5, screen_height - 25, sdl_renderer, 20, "Score: " + std::to_string(snake.score), {0xFF, 0xFF, 0xFF, 0xFF});
-  text->display(screen_width - 135, screen_height - 25, sdl_renderer, 20, "Enemy Score: " + std::to_string(snake2.score), {0xFF, 0xFF, 0xFF, 0xFF});
+  text->display(5, screen_height - 25, sdl_renderer, 18, "Score: " + std::to_string(snake.score), {0xFF, 0xFF, 0xFF, 0xFF});
+  text->display(screen_width - 135, screen_height - 25, sdl_renderer, 18, "Enemy Score: " + std::to_string(snake2.score), {0xFF, 0xFF, 0xFF, 0xFF});
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);

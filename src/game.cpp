@@ -8,9 +8,9 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       engine(dev()),
       random_w(0, static_cast<int>(grid_width)-1),
       random_h(0, static_cast<int>(grid_height)-1),
-      bonus_interval(20, 30) {
+      bonus_interval(20, 40) {
   PlaceFood();
-  bonus.place_bonus = false;
+  bonus.active = false;
   bonus.interval = 10;
   enemy_snake.speed = 0.08;
   enemy_snake.head_x = snake.head_x - 10;
@@ -58,7 +58,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::PlaceBonus() {
-  bonus.place_bonus = true;
+  bonus.active = true;
   int x, y;
   while (true) {
     x = random_w(engine);
@@ -75,7 +75,7 @@ void Game::PlaceBonus() {
 }
 
 void Game::RemoveBonus() {
-  bonus.place_bonus = false;
+  bonus.active = false;
   bonus.loc.x = -1;
   bonus.loc.y = -1;
   bonus.interval = bonus_interval(engine);
@@ -108,7 +108,7 @@ void Game::UpdateBonus() {
     PlaceBonus();
   }
   // Remove bonus in 5 seconds
-  if (bonus.place_bonus && bonus_timer_end - bonus_timer_start >= 5 * 1000) {
+  if (bonus.active && bonus_timer_end - bonus_timer_start >= 5 * 1000) {
     RemoveBonus();
   }
 }
