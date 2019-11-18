@@ -44,7 +44,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(snake.score, frame_count);
+      renderer.UpdateWindowTitle(frame_count);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -138,6 +138,7 @@ void Game::Update() {
     // Grow snake.
     snake.double_growth = true;
     snake.GrowBody();
+    snake.speed += 0.02;
     RemoveBonus();
   }
 

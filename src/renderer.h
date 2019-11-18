@@ -15,7 +15,7 @@ class Renderer {
   ~Renderer();
 
   void Render(Snake snake, Snake const snake2, SDL_Point const &food, Bonus const &bonus);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int fps);
 
  private:
   SDL_Window *sdl_window;
