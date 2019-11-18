@@ -49,7 +49,7 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->addTile("../assets/frog.png", "bonus");
 
   //Create Text
-  std::unique_ptr<Text> ptr_text(new Text(sdl_renderer, "../assets/calibri.ttf", 30, "Hello", {0xFF, 0xFF, 0xFF, 0xFF}));
+  std::unique_ptr<Text> ptr_text(new Text( "../assets/calibri.ttf"));
   text = std::move(ptr_text);
 }
 
@@ -73,7 +73,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
 
   // Render food
   Tilemap::instance()->render("food", food.x * block.w, food.y * block.h);
-  text->display(grid_width, grid_height, sdl_renderer);
+  text->display(grid_width, grid_height, sdl_renderer, 30, "Score: " + std::to_string(snake.score), {0xFF, 0xFF, 0xFF, 0xFF});
 
   // Render bonus
   if (bonus.place_bonus)

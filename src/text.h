@@ -9,11 +9,12 @@
 
 class Text {
 public:
-    Text(SDL_Renderer *renderer, const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color);
-    void display(int x, int y, SDL_Renderer *renderer);
+    Text(const std::string &font_path);
+    void display(int x, int y, SDL_Renderer *renderer, int font_size, const std::string &message_text, const SDL_Color &color);
     static SDL_Texture *loadFont(SDL_Renderer *renderer, const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color);
 
 private:
+    std::string font_path;
     SDL_Texture *text_texture{nullptr};
     SDL_Rect text_rect;
 };

@@ -29,8 +29,6 @@ class Game {
   std::uniform_int_distribution<int> random_h;
   std::uniform_int_distribution<int> bonus_interval;
 
-  int score{0};
-
   void PlaceFood();
   void PlaceBonus();
   void RemoveBonus();

@@ -1,17 +1,17 @@
 #include <iostream>
 #include "text.h"
 
-Text::Text(SDL_Renderer *renderer,
-           const std::string &font_path,
-           int font_size,
-           const std::string &message_text,
-           const SDL_Color &color)
+Text::Text(const std::string &font_path) : font_path(font_path)
 {
-    text_texture = loadFont(renderer, font_path, font_size, message_text, color);
-    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+    // text_texture = loadFont(renderer, font_path, font_size, message_text, color);
+    // SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+    std::cout << font_path << "\n";
 }
 
-void Text::display(int x, int y, SDL_Renderer *renderer) {
+void Text::display(int x, int y, SDL_Renderer *renderer, int font_size, const std::string &message_text, const SDL_Color &color) {
+    text_texture = loadFont(renderer, font_path, font_size, message_text, color);
+    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+
     text_rect.x = x;
     text_rect.y = y;
     SDL_RenderCopy(renderer, text_texture, nullptr, &text_rect);

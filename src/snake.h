@@ -28,6 +28,7 @@ class Snake {
   float head_y;
   std::vector<SDL_Point> body;
   bool double_growth{false};
+  int score{0};
 
  private:
   void UpdateHead();
