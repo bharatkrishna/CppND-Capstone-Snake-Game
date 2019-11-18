@@ -93,9 +93,10 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
     Tilemap::instance()->render("snake_head", block.x, block.y);
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 20, "Game Over!", {0xFF, 0xFF, 0xFF, 0xFF});
   }
 
- // Render snake2's body
+  // Render snake2's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   for (SDL_Point const &point : snake2.body) {
     block.x = point.x * block.w;
@@ -112,9 +113,14 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
   }
 
+  if (snake.alive && !snake2.alive) {
+    text->display(screen_width - 380, screen_height - 25, sdl_renderer, 20, "Enemy Dead!", {0xFF, 0xFF, 0xFF, 0xFF});
+  }
+
   //Render score
   text->display(5, screen_height - 25, sdl_renderer, 20, "Score: " + std::to_string(snake.score), {0xFF, 0xFF, 0xFF, 0xFF});
   text->display(screen_width - 135, screen_height - 25, sdl_renderer, 20, "Enemy Score: " + std::to_string(snake2.score), {0xFF, 0xFF, 0xFF, 0xFF});
+
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }

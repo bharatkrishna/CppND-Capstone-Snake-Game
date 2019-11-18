@@ -116,10 +116,12 @@ void Game::UpdateBonus() {
 void Game::Update() {
   if (!snake.alive) return;
 
-  UpdateBonus();
-  MoveEnemy();
   snake.Update();
-  enemy_snake.Update();
+  if (enemy_snake.alive) {
+    MoveEnemy();
+    enemy_snake.Update();
+  }
+  UpdateBonus();
 
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
