@@ -145,6 +145,7 @@ void Game::Update() {
   int enemy_snake_new_x = static_cast<int>(enemy_snake.head_x);
   int enemy_snake_new_y = static_cast<int>(enemy_snake.head_y);
   if (food.x == enemy_snake_new_x && food.y == enemy_snake_new_y) {
+    enemy_snake.score++;
     PlaceFood();
     enemy_snake.GrowBody();
   }

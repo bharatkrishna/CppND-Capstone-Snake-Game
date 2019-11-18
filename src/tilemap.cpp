@@ -57,7 +57,7 @@ void Tilemap::render(std::string id, int x, int y) {
 void Tilemap::fillWith(std::string id, int x, int y, int w, int h) {
   for (int cur_x = x; cur_x < w; cur_x += tile_w) {
     for (int cur_y = y; cur_y < h; cur_y += tile_h) {
-      render(id, cur_x, cur_y);
+      render(id, cur_x, cur_y-30); // -30 --> hack to leave the bottom of window without filling
     }
   }
 }
