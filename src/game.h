@@ -37,6 +37,7 @@ class Game {
   void MoveEnemy();
   void ChangeDirection(Snake &snake, Snake::Direction input,
                        Snake::Direction opposite) const;
+  void ConsumeFoodOrBonus(Snake &snake);
 };
 
 #endif

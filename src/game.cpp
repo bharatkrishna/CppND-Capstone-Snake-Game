@@ -123,6 +123,12 @@ void Game::Update() {
   }
   UpdateBonus();
 
+  ConsumeFoodOrBonus(snake);
+  ConsumeFoodOrBonus(enemy_snake);
+
+}
+
+void Game::ConsumeFoodOrBonus(Snake &snake) {
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
   // Check if there's food over here
@@ -143,29 +149,23 @@ void Game::Update() {
     snake.speed += 0.02;
     RemoveBonus();
   }
-
-  // For enemy snake
-  int enemy_snake_new_x = static_cast<int>(enemy_snake.head_x);
-  int enemy_snake_new_y = static_cast<int>(enemy_snake.head_y);
-  if (food.x == enemy_snake_new_x && food.y == enemy_snake_new_y) {
-    enemy_snake.score++;
-    PlaceFood();
-    enemy_snake.GrowBody();
-  }
 }
 
 void Game::MoveEnemy(){
-  if (static_cast<int>(enemy_snake.head_x) > food.x) {
+  int target_x = bonus.active ? bonus.loc.x : food.x;
+  int tatget_y = bonus.active ? bonus.loc.y : food.y;
+
+  if (static_cast<int>(enemy_snake.head_x) > target_x) {
     enemy_snake.direction = Snake::Direction::kLeft;
   }
-  else if (static_cast<int>(enemy_snake.head_x) < food.x) {
+  else if (static_cast<int>(enemy_snake.head_x) < target_x) {
     enemy_snake.direction = Snake::Direction::kRight;
   }
 
-  if (static_cast<int>(enemy_snake.head_y) > food.y) {
+  if (static_cast<int>(enemy_snake.head_y) > tatget_y) {
     enemy_snake.direction = Snake::Direction::kUp;
   }
-  else if (static_cast<int>(enemy_snake.head_y) < food.y) {
+  else if (static_cast<int>(enemy_snake.head_y) < tatget_y) {
     enemy_snake.direction = Snake::Direction::kDown;
   }
   return;
