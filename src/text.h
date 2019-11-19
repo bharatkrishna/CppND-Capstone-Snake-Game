@@ -9,7 +9,6 @@
 
 class Text {
 public:
-    ~Text();
     Text(const std::string &font_path);
     void display(int x, int y, SDL_Renderer *renderer, int font_size, const std::string &message_text, const SDL_Color &color);
     static SDL_Texture *loadFont(SDL_Renderer *renderer, const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color);

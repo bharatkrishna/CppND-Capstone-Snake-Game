@@ -1,9 +1,7 @@
 #include <iostream>
 #include "text.h"
 
-Text::Text(const std::string &font_path) : font_path(font_path)
-{
-}
+Text::Text(const std::string &font_path) : font_path(font_path) {}
 
 void Text::display(int x, int y, SDL_Renderer *renderer, int font_size, const std::string &message_text, const SDL_Color &color) {
     text_texture = loadFont(renderer, font_path, font_size, message_text, color);
@@ -31,8 +29,4 @@ SDL_Texture *Text::loadFont(SDL_Renderer *renderer, const std::string &font_path
     }
     SDL_FreeSurface(text_surface);
     return text_texture;
-}
-
-Text::~Text() {
-    std::cout << "In ~Text()\n";
 }
