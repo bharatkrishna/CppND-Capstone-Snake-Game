@@ -94,6 +94,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   } else {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
     text->display(screen_width - 380, screen_height - 25, sdl_renderer, 18, "Game Over!", {0xFF, 0x00, 0x00, 0xFF});
+    text->display(screen_width - 450, screen_height - 80, sdl_renderer, 30, "Press Enter to Reset", {0xFF, 0xFF, 0xFF, 0xFF});
   }
 
   // Render snake2's body

@@ -31,7 +31,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    controller.HandleInput(running, snake, enemy_snake);
     Update();
     renderer.Render(snake, enemy_snake, food, bonus);
 
@@ -55,6 +55,23 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       SDL_Delay(target_frame_duration - frame_duration);
     }
   }
+  if (!running)
+    std::cout << "Game not running\n";
+}
+
+void Game::Update() {
+  if (!snake.alive) return;
+
+  snake.Update();
+  if (enemy_snake.alive) {
+    MoveEnemy();
+    enemy_snake.Update();
+  }
+  UpdateBonus();
+
+  ConsumeFoodOrBonus(snake);
+  ConsumeFoodOrBonus(enemy_snake);
+
 }
 
 void Game::PlaceBonus() {
@@ -111,21 +128,6 @@ void Game::UpdateBonus() {
   if (bonus.active && bonus_timer_end - bonus_timer_start >= 5 * 1000) {
     RemoveBonus();
   }
-}
-
-void Game::Update() {
-  if (!snake.alive) return;
-
-  snake.Update();
-  if (enemy_snake.alive) {
-    MoveEnemy();
-    enemy_snake.Update();
-  }
-  UpdateBonus();
-
-  ConsumeFoodOrBonus(snake);
-  ConsumeFoodOrBonus(enemy_snake);
-
 }
 
 void Game::ConsumeFoodOrBonus(Snake &snake) {
