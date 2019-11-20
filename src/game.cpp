@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 #include "SDL.h"
+#include "debug.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
@@ -55,8 +56,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       SDL_Delay(target_frame_duration - frame_duration);
     }
   }
-  if (!running)
-    std::cout << "Game not running\n";
 }
 
 void Game::Update() {
@@ -85,7 +84,7 @@ void Game::PlaceBonus() {
     if (!snake.SnakeCell(x, y) && !enemy_snake.SnakeCell(x, y)) {
       bonus.loc.x = x;
       bonus.loc.y = y;
-      std::cout << "Bonus placed at: " << x << "," << y << "\n";
+      DEBUG_PRINT(std::cout << "Bonus placed at: " << x << "," << y << "\n");
       return;
     }
   }
@@ -96,7 +95,7 @@ void Game::RemoveBonus() {
   bonus.loc.x = -1;
   bonus.loc.y = -1;
   bonus.interval = bonus_interval(engine);
-  // std::cout << "Bonus interval: " << bonus.interval << "\n";
+  DEBUG_PRINT(std::cout << "Bonus interval: " << bonus.interval << "\n");
 }
 
 void Game::PlaceFood() {
@@ -109,7 +108,7 @@ void Game::PlaceFood() {
     if (!snake.SnakeCell(x, y) && !enemy_snake.SnakeCell(x, y)) {
       food.x = x;
       food.y = y;
-      std::cout << "Food placed at: " << x << "," << y << "\n";
+      DEBUG_PRINT(std::cout << "Food placed at: " << x << "," << y << "\n");
       return;
     }
   }
@@ -135,7 +134,7 @@ void Game::ConsumeFoodOrBonus(Snake &snake) {
   int new_y = static_cast<int>(snake.head_y);
   // Check if there's food over here
   if (food.x == new_x && food.y == new_y) {
-    std::cout << "Snake at: " << new_x << "," << new_y << "\n";
+    DEBUG_PRINT(std::cout << "Snake at: " << new_x << "," << new_y << "\n");
     snake.score++;
     PlaceFood();
     // Grow snake and increase speed.
@@ -173,5 +172,5 @@ void Game::MoveEnemy(){
   return;
 }
 
-int Game::GetScore() const { return snake.score; }
+std::pair<int, int> Game::GetScore() const { return std::make_pair(snake.score, enemy_snake.score); }
 int Game::GetSize() const { return snake.size; }

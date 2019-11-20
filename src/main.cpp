@@ -15,8 +15,11 @@ int main() {
   Controller controller;
   Game game(kGridWidth, kGridHeight-2);
   game.Run(controller, renderer, kMsPerFrame);
+  std::pair<int, int> scores = game.GetScore();
   std::cout << "Game has terminated successfully!\n";
-  std::cout << "Score: " << game.GetScore() << "\n";
+  std::cout << "Score: " << scores.first << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
+  std::cout << "Enemy Score: " << scores.second << "\n";
+
   return 0;
 }
