@@ -44,8 +44,10 @@ Renderer::Renderer(const std::size_t screen_width,
   tilemap->addTile("../assets/apple.png", "food");
   tilemap->addTile("../assets/snake_head.png", "snake_head");
   tilemap->addTile("../assets/snake_body.png", "snake_body");
+  tilemap->addTile("../assets/snake_head_dead.png", "snake_head_dead");
   tilemap->addTile("../assets/enemy_snake_head.png", "snake2_head");
   tilemap->addTile("../assets/enemy_snake_body.png", "snake2_body");
+  tilemap->addTile("../assets/enemy_snake_head_dead.png", "snake2_head_dead");
   tilemap->addTile("../assets/frog.png", "bonus");
 
   //Create Text
@@ -92,7 +94,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   if (snake.alive) {
     Tilemap::instance()->render("snake_head", block.x, block.y);
   } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+    Tilemap::instance()->render("snake_head_dead", block.x, block.y);
     text->display(screen_width - 380, screen_height - 25, sdl_renderer, 18, "Game Over!", {0xFF, 0x00, 0x00, 0xFF});
     text->display(screen_width - 450, screen_height - 80, sdl_renderer, 30, "Press Enter to Reset", {0xFF, 0xFF, 0xFF, 0xFF});
   }
@@ -111,7 +113,7 @@ void Renderer::Render(Snake const snake, Snake const snake2, SDL_Point const &fo
   if (snake2.alive) {
     Tilemap::instance()->render("snake2_head", block.x, block.y);
   } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+    Tilemap::instance()->render("snake2_head_dead", block.x, block.y);
   }
 
   if (snake.alive && !snake2.alive) {
