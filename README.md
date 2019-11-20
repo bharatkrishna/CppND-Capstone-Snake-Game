@@ -2,9 +2,9 @@
 
 This is the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The project chosen is Capstone Option 2.
 
-This is like the classic snake game except there is an ememy snake competing for food. The enemy is a simple AI which seeks and moves towards food. 
+The game is like the classic snake game except there is an ememy snake competing for food. The enemy is a simple AI which seeks and moves towards food. 
 
-Snakes grow every time they eat a fruit <img src="assets/apple.png" height=18/> and earn 1 point. There is one addtional bonus point for eating a frog <img src="assets/frog.png" height=18/> and the growth is also double that of eating a fruit. The bonus frog appears at random intervals and disappears soon. 
+Snakes grow every time they eat a fruit <img src="assets/apple.png" height=18/> and they earn 1 point for it. There is an addtional point for eating a bonus frog <img src="assets/frog.png" height=18/> and the growth is also double that of eating a fruit. The bonus frog appears at random intervals and disappears soon. 
 
 The snake keep growing until it dies biting itself. 
 
